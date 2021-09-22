@@ -9,117 +9,117 @@
 </head>
 <body style="overflow: hidden">
 
-<img src="./resources/bg.jpg" style="width: 100%;height: 100%;z-index: -1;position: fixed">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="./js/bootstrap.js"></script>
-<script src="./js/bootstrap.bundle.js"></script>
+    <img src="./resources/bg.jpg" style="width: 100%;height: 100%;z-index: -1;position: fixed">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/bootstrap.bundle.js"></script>
 
-<style>
-    .active{
-        color: red;
-    }
-    .touming{
-        background: rgba(0,0,0,0);
-    }
-    .lyricActive{
-        color:deepskyblue;
-        font-size: 20px;
-    }
-</style>
+    <style>
+        .active{
+            color: red;
+        }
+        .touming{
+            background: rgba(0,0,0,0);
+        }
+        .lyricActive{
+            color:deepskyblue;
+            font-size: 20px;
+        }
+    </style>
 
-<div id="all" style="height: 100%;width: 100%;position: absolute;">
-    <div id="mask" v-if="isShowVideo" @click="hide" style="width: 100%;height: 100%;background: rgba(0,0,0,0.75);z-index: 1;position: absolute">
-        <video :src="videoAddress" controls="controls" autoplay="autoplay" style="width: 50%;height: 50%;margin:15% 25% 35% 25%">
-            你的辣鸡浏览器不支持video标签
-        </video>
-    </div>
-    <div id="player" style="width: 1000px;height: 600px;margin:auto;top:75px;position: relative">
-        <div style="height: 10%;width: 100%;background: deepskyblue;position: relative">
-            <div style="width: 20%;height: 70%;float: left;margin-left: 2%;margin-top: 0.8%">
-                <img src="./resources/logo.png" style="width: 100%;height: 100%;cursor: pointer" @click="welcome" title="返回主页">
-            </div>
-            <div class="input-group mb-3" style="width: 50%;height: 60%;float: right;top: 20%;right: 2%">
-                <input type="text" class="form-control" style="height: 100%" placeholder="输入关键字" v-model="keyWord" @keyup.enter="searchMusic">
-                <div class="input-group-prepend" style="height: 100%">
-                    <span class="input-group-text" style="cursor: pointer" @click="searchMusic">搜索</span>
+    <div id="all" style="height: 100%;width: 100%;position: absolute;">
+        <div id="mask" v-if="isShowVideo" @click="hide" style="width: 100%;height: 100%;background: rgba(0,0,0,0.75);z-index: 1;position: absolute">
+            <video :src="videoAddress" controls="controls" autoplay="autoplay" style="width: 50%;height: 50%;margin:15% 25% 35% 25%">
+                你的辣鸡浏览器不支持video标签
+            </video>
+        </div>
+        <div id="player" style="width: 1000px;height: 600px;margin:auto;top:75px;position: relative">
+            <div style="height: 10%;width: 100%;background: deepskyblue;position: relative">
+                <div style="width: 20%;height: 70%;float: left;margin-left: 2%;margin-top: 0.8%">
+                    <img src="./resources/logo.png" style="width: 100%;height: 100%;cursor: pointer" @click="welcome" title="返回主页">
+                </div>
+                <div class="input-group mb-3" style="width: 50%;height: 60%;float: right;top: 20%;right: 2%">
+                    <input type="text" class="form-control" style="height: 100%" placeholder="输入关键字" v-model="keyWord" @keyup.enter="searchMusic">
+                    <div class="input-group-prepend" style="height: 100%">
+                        <span class="input-group-text" style="cursor: pointer" @click="searchMusic">搜索</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="jumbotron" style="width: 100%;height: 80%;margin-bottom: 0;position: relative;background:rgba(255,255,255,0.5)" v-if="!showMainPage">
-            <h1 class="display-4">欢迎使用辣鸡播放器</h1>
-            <p class="lead">纯粹乱写的</p>
-            <hr class="my-4">
-            <p>请在输入框输入关键字开始使用</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button" @click="getHotMusics">随便听首新歌</a>
-        </div>
+            <div class="jumbotron" style="width: 100%;height: 80%;margin-bottom: 0;position: relative;background:rgba(255,255,255,0.5)" v-if="!showMainPage">
+                <h1 class="display-4">欢迎使用辣鸡播放器</h1>
+                <p class="lead">纯粹乱写的</p>
+                <hr class="my-4">
+                <p>请在输入框输入关键字开始使用</p>
+                <a class="btn btn-primary btn-lg" href="#" role="button" @click="getHotMusics">随便听首新歌</a>
+            </div>
 
-        <div id="displayArea" style="width: 100%;height: 80%;background:rgba(255,255,255,0.5);position: relative" v-else="showMainPage">
-            <img src="./resources/bg.jpg" style="width: 100%;height: 100%;position: absolute;z-index: -1">
-            <!--左边栏-->
-            <div id="leftArea" style="width: 30%;height: 100%;float:left;position: relative">
-                <div style="width: 100%;height: 90%;position: relative;overflow:auto">
-                    <ul class="list-group">
-                        <li v-for="item in musicList" class="list-group-item d-flex justify-content-between align-items-center" style="background: rgba(0,0,0,0)">
+            <div id="displayArea" style="width: 100%;height: 90%;background:rgba(255,255,255,0.5);position: relative" v-else="showMainPage">
+                <img src="./resources/bg.jpg" style="width: 100%;height: 100%;position: absolute;z-index: -1">
+                <!--左边栏-->
+                <div id="leftArea" style="width: 30%;height: 90%;float:left;position: relative">
+                    <div style="width: 100%;height: 90%;position: relative;overflow:auto">
+                        <ul class="list-group">
+                            <li v-for="item in musicList" class="list-group-item d-flex justify-content-between align-items-center" style="background: rgba(0,0,0,0)">
                                 <span>
                                     <a href="#" @click="playMusic(item.id)" :class={active:item.id==selectedMusicId}>
                                         {{item.name}}
                                     </a>
                                     <span v-for="artist in item.artists" class="badge badge-secondary">{{artist.name}}</span>
                                 </span>
-                            <span v-show="item.mvid!=0" @click="playVideo(item.mvid)" class="badge badge-primary badge-pill" style="cursor: pointer">MV</span>
-                        </li>
-                    </ul>
-                </div>
-                <div style="width: 100%;height: 10%;position: relative;text-align: center" v-show="musicList.length>0">
+                                <span v-show="item.mvid!=0" @click="playVideo(item.mvid)" class="badge badge-primary badge-pill" style="cursor: pointer">MV</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width: 100%;height: 10%;position: relative;text-align: center" v-show="musicList.length>0">
                         <span>
                             <button type="button" class="btn btn-outline-primary touming btn-sm" :title="currentPage==1?'已经是第一页了':'前一页'" :disabled="currentPage==1" @click="prePage"><<</button>
                             <button type="button" class="btn btn-outline-primary touming btn-sm" :title="currentPage*30>songCount-1?'已经是最后一页了':'下一页'" :disabled="currentPage*30>songCount-1" @click="nextPage">>></button>
                         </span>
+                    </div>
                 </div>
-            </div>
-            <!--中间显示区-->
-            <div id="centerArea" v-show="showDetail" style="width: 40%;height: 100%;float: left; border-right:1px solid lightslategray;border-left:1px solid lightslategray;position: relative">
-                <img :src="musicImg" style="width: 40%;height: 40%;margin-left: 30%;margin-top: 5%">
-                <div style="width: 90%;height: 20%;position: relative;text-align: center;margin-left: 5%">
-                    <h5>{{musicInfo.musicName}}</h5>
-                    <p>{{musicInfo.artists+"-《"+musicInfo.album+"》"}}</p>
+                <!--中间显示区-->
+                <div id="centerArea" v-show="showDetail" style="width: 40%;height: 90%;float: left; border-right:1px solid lightslategray;border-left:1px solid lightslategray;position: relative">
+                    <img :src="musicImg" style="width: 40%;height: 40%;margin-left: 30%;margin-top: 5%">
+                    <div style="width: 90%;height: 20%;position: relative;text-align: center;margin-left: 5%">
+                        <h5>{{musicInfo.musicName}}</h5>
+                        <p>{{musicInfo.artists+"-《"+musicInfo.album+"》"}}</p>
+                    </div>
+                    <div style="height: 35%;position: relative;overflow:hidden;text-align: center">
+                        <ul :style="{transform:'translateY('+(moveY*20+40)+'%)'}" style="height: 100%;padding: 0">
+                            <li v-for="(item,index) in lyricArr" style="list-style-type: none;height: 20%" :class={lyricActive:index==currentLyricIndex} tr>
+                                {{item.lyric}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="height: 35%;position: relative;overflow:hidden;text-align: center">
-                    <ul :style="{transform:'translateY('+(moveY*20+40)+'%)'}" style="height: 100%;padding: 0">
-                        <li v-for="(item,index) in lyricArr" style="list-style-type: none;height: 20%" :class={lyricActive:index==currentLyricIndex} tr>
-                            {{item.lyric}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--右边栏-->
-            <div id="rightArea" style="width: 30%;height: 100%;float: left;position: relative;overflow:auto;">
-                <ul class="list-group">
-                    <li v-for="item in currentMusicComments" class="list-group-item" style="background: rgba(0,0,0,0)">
+                <!--右边栏-->
+                <div id="rightArea" style="width: 30%;height: 90%;float: left;position: relative;overflow:auto;">
+                    <ul class="list-group">
+                        <li v-for="item in currentMusicComments" class="list-group-item" style="background: rgba(0,0,0,0)">
                             <span style="font-weight: bold">
                                 <img :src=item.user.avatarUrl class="img-thumbnail" style="width: 40px;height: 40px">
                                 {{item.user.nickname}}
                             </span>
-                        <div>
-                            {{item.content}}
-                        </div>
-                        <div>
-                            <span style="float: left;font-size: 12px">{{"赞："+item.likedCount}}</span>
-                            <span style="float: right;font-size: 12px">{{item.time}}</span>
-                        </div>
-                    </li>
-                </ul>
+                            <div>
+                                {{item.content}}
+                            </div>
+                            <div>
+                                <span style="float: left;font-size: 12px">{{"赞："+item.likedCount}}</span>
+                                <span style="float: right;font-size: 12px">{{item.time}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="height: 10%;width: 100%;position: relative;float: left">
+                    <audio id="audio" :src="musicAddress" @timeupdate="updateLyric" controls autoplay style="width: 100%;height: 100%;border-radius: 0">
+                        你的辣鸡浏览器不支持audio标签
+                    </audio>
+                </div>
             </div>
         </div>
-        <div style="height: 10%;width: 100%;position: relative">
-            <audio id="audio" :src="musicAddress" @timeupdate="updateLyric" controls autoplay style="width: 100%;height: 100%;background:whitesmoke">
-                你的辣鸡浏览器不支持audio标签
-            </audio>
-        </div>
     </div>
-</div>
-<script src="./js/forMusicPlayer.js"></script>
+    <script src="./js/forMusicPlayer.js"></script>
 </body>
 </html>
