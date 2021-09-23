@@ -84,6 +84,7 @@ new Vue(
             //播放音乐并获取详细信息
             playMusic:function (id){
                 //重置歌词滚动区
+                this.lyricArr=[]
                 this.moveY=0
                 this.currentLyricIndex=0
 
@@ -110,15 +111,22 @@ new Vue(
                 })
                 //获取歌词
                 $.get("https://autumnfish.cn/lyric?id="+id,function (result){
-                    var liricArr_origin=result.lrc.lyric.split('\n')
-                    var liricArr_tmp=[]
-                    for(let i=0;i<liricArr_origin.length;i++){
-                        if(liricArr_origin[i]!=null&&liricArr_origin[i]!=""){
-                            liricArr_tmp.push({time:formatTime(liricArr_origin[i].split(']')[0].substring(1)),lyric:liricArr_origin[i].split(']')[1]})
+                    try {
+                        var liricArr_origin = result.lrc.lyric.split('\n')
+                        var liricArr_tmp = []
+                        for (let i = 0; i < liricArr_origin.length; i++) {
+                            if (liricArr_origin[i] != null && liricArr_origin[i] != "") {
+                                liricArr_tmp.push({
+                                    time: formatTime(liricArr_origin[i].split(']')[0].substring(1)),
+                                    lyric: liricArr_origin[i].split(']')[1]
+                                })
+                            }
                         }
+                        sortLyric(liricArr_tmp)
+                        tmp.lyricArr=liricArr_tmp
+                    }catch (e){
+                        tmp.lyricArr=[]
                     }
-                    sortLyric(liricArr_tmp)
-                    tmp.lyricArr=liricArr_tmp
                 })
 
                 //获取歌曲url
@@ -191,4 +199,4 @@ new Vue(
             }
         }
     }
-);
+)

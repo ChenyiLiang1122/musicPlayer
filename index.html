@@ -88,6 +88,7 @@
                     </div>
                     <div style="height: 35%;position: relative;overflow:hidden;text-align: center">
                         <ul :style="{transform:'translateY('+(moveY*20+40)+'%)'}" style="height: 100%;padding: 0">
+                            <li v-if="lyricArr.length==0" style="list-style-type: none;height: 20%">纯音乐，请欣赏</li>
                             <li v-for="(item,index) in lyricArr" style="list-style-type: none;height: 20%" :class={lyricActive:index==currentLyricIndex} tr>
                                 {{item.lyric}}
                             </li>
