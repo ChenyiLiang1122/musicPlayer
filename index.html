@@ -24,7 +24,7 @@
         }
         .lyricActive{
             color:deepskyblue;
-            font-size: 20px;
+            font-size: 18px;
         }
     </style>
 
@@ -81,12 +81,12 @@
                 </div>
                 <!--中间显示区-->
                 <div id="centerArea" v-show="showDetail" style="width: 40%;height: 90%;float: left; border-right:1px solid lightslategray;border-left:1px solid lightslategray;position: relative">
-                    <img :src="musicImg" style="width: 40%;height: 40%;margin-left: 30%;margin-top: 5%">
+                    <img :src="musicImg" style="width: 40%;height: 30%;margin-left: 30%;margin-top: 5%">
                     <div style="width: 90%;height: 20%;position: relative;text-align: center;margin-left: 5%">
                         <h5>{{musicInfo.musicName}}</h5>
                         <p>{{musicInfo.artists+"-《"+musicInfo.album+"》"}}</p>
                     </div>
-                    <div style="height: 35%;position: relative;overflow:hidden;text-align: center">
+                    <div style="height: 45%;position: relative;overflow:hidden;text-align: center">
                         <ul :style="{transform:'translateY('+(moveY*20+40)+'%)'}" style="height: 100%;padding: 0">
                             <li v-if="lyricArr.length==0" style="list-style-type: none;height: 20%">纯音乐，请欣赏</li>
                             <li v-for="(item,index) in lyricArr" style="list-style-type: none;height: 20%" :class={lyricActive:index==currentLyricIndex} tr>

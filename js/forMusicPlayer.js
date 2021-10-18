@@ -92,15 +92,32 @@ new Vue(
                 var tmp = this
 
                 //获取歌曲详细信息
-                $.get("https://autumnfish.cn/song/detail?ids="+id,function (result){
+                // $.get("https://autumnfish.cn/song/detail?ids="+id,function (result){
+                //     tmp.musicImg=result.songs[0].al.picUrl
+                //     tmp.musicInfo.musicName=result.songs[0].name
+                //     tmp.musicInfo.album=result.songs[0].al.name
+                //     tmp.musicInfo.artists=[]
+                //     for(let i=0;i<result.songs[0].ar.length;i++){
+                //         tmp.musicInfo.artists.push(result.songs[0].ar[i].name)
+                //     }
+                // })
+                $.get("https://autumnfish.cn/album?id="+id,function (result){
                     tmp.musicImg=result.songs[0].al.picUrl
-                    tmp.musicInfo.musicName=result.songs[0].name
-                    tmp.musicInfo.album=result.songs[0].al.name
-                    tmp.musicInfo.artists=[]
-                    for(let i=0;i<result.songs[0].ar.length;i++){
-                        tmp.musicInfo.artists.push(result.songs[0].ar[i].name)
-                    }
                 })
+                for(let i=0;i<tmp.musicList.length;i++){
+                    if(tmp.selectedMusicId==tmp.musicList[i].id){
+                        tmp.musicInfo.musicName=tmp.musicList[i].name
+                        tmp.musicInfo.album=tmp.musicList[i].album.name
+                        tmp.musicInfo.artists=[]
+                        for (let j=0;j<tmp.musicList[i].artists.length;j++){
+                            tmp.musicInfo.artists.push(tmp.musicList[i].artists[j].name)
+                        }
+                        $.get("https://autumnfish.cn/album?id="+tmp.musicList[i].album.id,function (result){
+                            tmp.musicImg=result.songs[0].al.picUrl
+                        })
+                    }
+                }
+
                 //获取评论
                 $.get("https://autumnfish.cn/comment/music?id="+id,function (result){
                     tmp.currentMusicComments=result.hotComments
@@ -130,9 +147,12 @@ new Vue(
                 })
 
                 //获取歌曲url
-                $.get("https://autumnfish.cn/song/url?id="+id,function (result){
-                    tmp.musicAddress=result.data[0].url
-                })
+                // $.get("https://autumnfish.cn/song/url?id="+id,function (result){
+                //     tmp.musicAddress=result.data[0].url
+                // })
+
+                tmp.musicAddress="https://music.163.com/song/media/outer/url?id="+id+".mp3"
+
                 //获取到所有信息后，刷新显示区
                 this.showDetail=true
             },
@@ -199,4 +219,4 @@ new Vue(
             }
         }
     }
-)
+);
