@@ -83,7 +83,9 @@ new Vue(
 
             //播放音乐并获取详细信息
             playMusic:function (id){
-                //重置歌词滚动区
+                //重置歌词滚动区和评论区
+                this.currentMusicComments=[]
+                this.musicImg=null
                 this.lyricArr=[]
                 this.moveY=0
                 this.currentLyricIndex=0
@@ -101,9 +103,6 @@ new Vue(
                 //         tmp.musicInfo.artists.push(result.songs[0].ar[i].name)
                 //     }
                 // })
-                $.get("https://autumnfish.cn/album?id="+id,function (result){
-                    tmp.musicImg=result.songs[0].al.picUrl
-                })
                 for(let i=0;i<tmp.musicList.length;i++){
                     if(tmp.selectedMusicId==tmp.musicList[i].id){
                         tmp.musicInfo.musicName=tmp.musicList[i].name
@@ -207,13 +206,14 @@ new Vue(
             //获取热门新歌
             getHotMusics:function (){
                 $.ajaxSettings.async = false
-                var id=-1
+                var tmp=this
                 $.get("https://autumnfish.cn/personalized/newsong",function (result){
-                    id=result.result[0].id
-                    console.log(result.result[0].id)
+                    tmp.musicList=[]
+                    for(let i=0;i<result.result.length;i++){
+                        tmp.musicList.push(result.result[i].song)
+                    }
                 })
-                console.log(id)
-                this.playMusic(id)
+                this.playMusic(tmp.musicList[0].id)
                 this.showMainPage=true
                 $.ajaxSettings.async = true
             }
